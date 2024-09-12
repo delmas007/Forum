@@ -17,7 +17,9 @@ public class SubjectDTO {
     private Long id;
     private String title;
     private String description;
-    private Forum forum;
+
+    @JsonIgnore
+    private ForumDTO forum;
 
     @JsonIgnore
     private Set<MessageDTO> message;

@@ -1,6 +1,7 @@
 package ci.digitalacademy.forumv1.services.dto;
 
 import ci.digitalacademy.forumv1.models.Subject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +14,8 @@ public class ForumDTO {
     private Long id;
     private String name;
     private String description;
+
+
+    @JsonIgnore
     private Set<SubjectDTO> subject;
 }

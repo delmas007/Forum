@@ -20,7 +20,7 @@ public class Forum {
     private String name;
     private String description;
 
-   @OneToMany
+   @OneToMany(mappedBy = "forum")
     private Set<Subject> subject;
 
 }

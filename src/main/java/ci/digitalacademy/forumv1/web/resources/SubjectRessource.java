@@ -18,10 +18,10 @@ import java.util.Optional;
 public class SubjectRessource {
     private final SubjectService subjectService;
 
-    @PostMapping
-    public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO){
+    @PostMapping("/{id}")
+    public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO,@PathVariable Long id){
         log.debug("REST Request to save Subject : {}", subjectDTO);
-        return new  ResponseEntity<>(subjectService.create(subjectDTO), HttpStatus.CREATED);
+        return new  ResponseEntity<>(subjectService.create(subjectDTO,id), HttpStatus.CREATED);
     }
 
 //    @PostMapping("/{id}")
@@ -51,6 +51,12 @@ public class SubjectRessource {
         }else{
             return new ResponseEntity<>("Subject not found",HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/forum/{id}")
+    public List<SubjectDTO> findByForumId(@PathVariable Long id){
+        log.debug("REST Request to get all Subjects by forum id : {}", id);
+        return subjectService.findByForumId(id);
     }
 
 

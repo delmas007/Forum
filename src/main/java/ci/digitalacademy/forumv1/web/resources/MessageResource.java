@@ -25,11 +25,8 @@ public class MessageResource {
     @PostMapping("/{id}")
     public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
         log.debug("REST Request to save  {}", messageDTO);
-        //Déclaration d'un optionnal pour récuperer l'objet
         Optional<SubjectDTO> byId = subjectService.findById(id);
-        //Récupération de l'objet subject pour pourvoir relier à notre objet message
         messageDTO.setSubject(byId.get());
-        //Enregistrement d'un message
         return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
     }
 

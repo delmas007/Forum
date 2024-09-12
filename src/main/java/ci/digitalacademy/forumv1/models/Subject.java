@@ -21,6 +21,9 @@ public class Subject {
     private String title;
     private String description;
 
+    @ManyToOne
+    private Forum forum;
+
     @OneToMany(mappedBy = "subject")
     private Set<Message> message;
 }

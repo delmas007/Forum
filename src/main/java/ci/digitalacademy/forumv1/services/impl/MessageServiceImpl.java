@@ -3,12 +3,14 @@ package ci.digitalacademy.forumv1.services.impl;
 import ci.digitalacademy.forumv1.models.Message;
 import ci.digitalacademy.forumv1.repositories.MessageRepository;
 import ci.digitalacademy.forumv1.services.MessageService;
+import ci.digitalacademy.forumv1.services.SubjectService;
 import ci.digitalacademy.forumv1.services.dto.MessageDTO;
 import ci.digitalacademy.forumv1.services.mapper.MessageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,5 +35,18 @@ public class MessageServiceImpl implements MessageService {
         return messageRepository.findAll().stream().map(message -> {
             return messageMapper.fromEntity(message);
         }).toList();
+    }
+
+    @Override
+    public List<MessageDTO> getAllMessageSubject(Long id) {
+        List<MessageDTO> listMessage = new ArrayList<>();
+        List<MessageDTO> messages = findAll();
+        for (MessageDTO message : messages){
+            if (message.getSubject().getId().equals(id)){
+                listMessage.add(message);
+            }
+        }
+        System.out.println(listMessage);
+        return listMessage;
     }
 }

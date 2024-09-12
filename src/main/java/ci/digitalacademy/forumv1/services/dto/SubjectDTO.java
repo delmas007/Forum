@@ -2,6 +2,7 @@ package ci.digitalacademy.forumv1.services.dto;
 
 import ci.digitalacademy.forumv1.models.Forum;
 import ci.digitalacademy.forumv1.models.Message;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -18,5 +19,6 @@ public class SubjectDTO {
     private String description;
     private Forum forum;
 
+    @JsonIgnore
     private Set<MessageDTO> message;
 }

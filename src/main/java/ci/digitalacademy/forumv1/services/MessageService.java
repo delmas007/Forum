@@ -8,5 +8,5 @@ public interface MessageService {
 
     MessageDTO saveMessage(MessageDTO messageDTO);
 
-    List<MessageDTO> getAllMessageSubject();
+    List<MessageDTO> findAll();
 }

@@ -16,10 +16,15 @@
 Si vous avez besoin de tester les endpoints, vous pouvez utiliser Postman ou tout autre outil de test d'API. Voici les endpoints disponibles :
     - `GET /api/forums` : Récupérer la liste des forums
     - `POST /api/forums` : Créer un forum
-    - `GET /api/forums/{id}` : Récupérer un forum
-    - `POST /api/subject/{id}` : Créer un sujet dans un forum
-    - `GET /api/subject/{id}` : Récupérer la liste des sujets d'un forum
-    - `GET /api/subject/{id}` : Récupérer un sujet
-    - `POST /api/messages/{id}` : Créer un message dans un sujet
-    - `GET /api/messages/{id}` : Récupérer la liste des messages d'un sujet
-    - `GET /api/messages/{id}` : Récupérer la liste des messages d'un sujet
+    - `GET /api/forums/{id}` : Récupérer un forum par son id
+    - `GET /api/forums/slug/{slug}` : Récupérer un forum par son slug
+    - `POST /api/subject/{id}` : Créer un sujet dans un forum par son id
+    - `POST /api/subject/slug/{slug}` : Créer un sujet dans un forum par son slug
+    - `GET /api/subject/{id}` : Récupérer la liste des sujets d'un forum par son id
+    - `GET /api/subject/slug/{slug}` : Récupérer la liste des sujets d'un forum par son slug
+    - `GET /api/subject/{id}` : Récupérer un sujet par son id
+    - `GET /api/subject/slug/{slug}` : Récupérer un sujet par son slug
+    - `POST /api/messages/{id}` : Créer un message dans un sujet par son id
+    - `POST /api/messages/slug/{slug}` : Créer un message dans un sujet par son slug
+    - `GET /api/messages/{id}` : Récupérer la liste des messages d'un sujet par son id
+    - `GET /api/messages/slug/{slug}` : Récupérer la liste des messages d'un sujet par son slug

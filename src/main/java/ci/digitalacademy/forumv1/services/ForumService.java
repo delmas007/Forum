@@ -12,6 +12,7 @@ public interface ForumService {
     ForumDTO update (ForumDTO forumDTO);
 
     Optional<ForumDTO> finOne(Long id);
+    Optional<ForumDTO> finOne(String slug);
 
     List<ForumDTO> finAll();
 

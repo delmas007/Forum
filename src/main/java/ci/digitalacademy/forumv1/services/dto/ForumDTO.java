@@ -12,6 +12,7 @@ import java.util.Set;
 @Setter
 public class ForumDTO {
     private Long id;
+    private String slug;
     private String name;
     private String description;
 

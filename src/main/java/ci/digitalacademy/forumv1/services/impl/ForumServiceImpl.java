@@ -5,6 +5,7 @@ import ci.digitalacademy.forumv1.repositories.ForumRepository;
 import ci.digitalacademy.forumv1.services.ForumService;
 import ci.digitalacademy.forumv1.services.dto.ForumDTO;
 import ci.digitalacademy.forumv1.services.mapper.ForumMapper;
+import ci.digitalacademy.forumv1.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public ForumDTO save(ForumDTO forumDTO) {
         Forum forum = forumMapper.toEntity(forumDTO);
+        forum.setSlug(SlugifyUtils.generate(forum.getName()));
         Forum saveForum = forumRepository.save(forum);
         return forumMapper.fromEntity(saveForum);
     }
@@ -37,6 +39,13 @@ public class ForumServiceImpl implements ForumService {
             return forumMapper.fromEntity(forum);
         });
 
+    }
+
+    @Override
+    public Optional<ForumDTO> finOne(String slug) {
+        return forumRepository.findBySlug(slug).map(forum -> {
+            return forumMapper.fromEntity(forum);
+        });
     }
 
     @Override

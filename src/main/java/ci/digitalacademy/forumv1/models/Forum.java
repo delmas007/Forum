@@ -17,6 +17,7 @@ public class Forum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String slug;
     private String name;
     private String description;
 

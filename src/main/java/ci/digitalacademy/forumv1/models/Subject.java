@@ -18,6 +18,7 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String slug;
     private String title;
     private String description;
 

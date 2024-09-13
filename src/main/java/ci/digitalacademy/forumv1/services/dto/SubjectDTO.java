@@ -15,6 +15,7 @@ import java.util.Set;
 public class SubjectDTO {
 
     private Long id;
+    private String slug;
     private String title;
     private String description;
 

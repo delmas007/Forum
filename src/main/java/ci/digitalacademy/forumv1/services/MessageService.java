@@ -11,4 +11,5 @@ public interface MessageService {
     List<MessageDTO> findAll();
 
     List<MessageDTO> getAllMessageSubject(Long id);
+    List<MessageDTO> getAllMessageSubject(String slug);
 }

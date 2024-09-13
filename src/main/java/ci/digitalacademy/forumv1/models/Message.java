@@ -18,6 +18,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String slug;
     private String content;
     private LocalDate date;
 

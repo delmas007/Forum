@@ -45,6 +45,22 @@ public class ForumRessource {
         }
     }
 
+    @GetMapping("/slug/{slug}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Request to get forum by slug"),
+            @ApiResponse(responseCode = "404", description = "forum not found", content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @Operation(summary = "get one by slug", description = "this endpoint allow to get one slug")
+    public ResponseEntity<?> getOneBySlug(@PathVariable String slug){
+
+        Optional<ForumDTO> forumDTO = forumService.finOne(slug);
+        if (forumDTO.isPresent()){
+            return new ResponseEntity<>(forumDTO.get(),HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(forumDTO.get(),HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping
     @Operation(summary = "get all forum", description = "this endpoint allow to get all forum")
     public List<ForumDTO> getAll(){

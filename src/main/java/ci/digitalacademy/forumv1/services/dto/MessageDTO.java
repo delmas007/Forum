@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Setter
 public class MessageDTO {
     private Long id;
+    private String slug;
     private String content;
     private LocalDate date;
 

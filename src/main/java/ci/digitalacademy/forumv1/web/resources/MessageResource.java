@@ -27,12 +27,22 @@ public class MessageResource {
     private final MessageService messageService;
     private final SubjectService subjectService;
 
-    @PostMapping("/{id}")
+    @PostMapping("/slug/{slug}")
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
-    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
+    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable Long slug){
         log.debug("REST Request to save  {}", messageDTO);
-        Optional<SubjectDTO> byId = subjectService.findById(id);
+        Optional<SubjectDTO> byId = subjectService.findById(slug);
+        messageDTO.setSubject(byId.get());
+        return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{slug}")
+    @ApiResponse(responseCode = "201", description= "Request to save message")
+    @Operation(summary = "message new save", description = "this endpoint allow to save message")
+    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable String slug){
+        log.debug("REST Request to save  {}", messageDTO);
+        Optional<SubjectDTO> byId = subjectService.findBySlug(slug);
         messageDTO.setSubject(byId.get());
         return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
     }
@@ -53,5 +63,16 @@ public class MessageResource {
     public List<MessageDTO> getAllMessageSubject(@PathVariable Long id){
         log.debug("REST Request to get all message subject");
         return messageService.getAllMessageSubject(id);
+    }
+
+    @GetMapping("/slug/{slug}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Request to get message by slug"),
+            @ApiResponse(responseCode = "404", description = "message not found", content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @Operation(summary = "get all message subject", description = "this endpoint allow to get all message subject")
+    public List<MessageDTO> getAllMessageSubjectBySlug(@PathVariable String slug){
+        log.debug("REST Request to get all message subject by slug");
+        return messageService.getAllMessageSubject(slug);
     }
 }

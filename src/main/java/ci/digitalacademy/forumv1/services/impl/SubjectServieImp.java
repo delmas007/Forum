@@ -6,6 +6,7 @@ import ci.digitalacademy.forumv1.services.SubjectService;
 import ci.digitalacademy.forumv1.services.dto.ForumDTO;
 import ci.digitalacademy.forumv1.services.dto.SubjectDTO;
 import ci.digitalacademy.forumv1.services.mapper.SubjectMapper;
+import ci.digitalacademy.forumv1.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,15 @@ public class SubjectServieImp implements SubjectService {
     @Override
     public SubjectDTO create(SubjectDTO subjectDTO,Long id) {
         Optional<ForumDTO> forumDTO = forumService.finOne(id);
+        subjectDTO.setSlug(SlugifyUtils.generate(subjectDTO.getTitle()));
+        subjectDTO.setForum(forumDTO.get());
+        return subjectMapper.fromEntity(subjectRepository.save(subjectMapper.toEntity(subjectDTO)));
+    }
+
+    @Override
+    public SubjectDTO create(SubjectDTO subjectDTO, String slug) {
+        Optional<ForumDTO> forumDTO = forumService.finOne(slug);
+        subjectDTO.setSlug(SlugifyUtils.generate(subjectDTO.getTitle()));
         subjectDTO.setForum(forumDTO.get());
         return subjectMapper.fromEntity(subjectRepository.save(subjectMapper.toEntity(subjectDTO)));
     }
@@ -32,6 +42,8 @@ public class SubjectServieImp implements SubjectService {
     public SubjectDTO update(SubjectDTO subjectDTO) {
         return null;
     }
+
+
 
     @Override
     public void delete(Long id) {
@@ -49,10 +61,26 @@ public class SubjectServieImp implements SubjectService {
     }
 
     @Override
+    public Optional<SubjectDTO> findBySlug(String slug) {
+        return subjectRepository.findBySlug(slug).map(subjectMapper::fromEntity);
+    }
+
+    @Override
     public List<SubjectDTO> findByForumId(Long id) {
         List<SubjectDTO> subjectDTOList = new  ArrayList<>();
         findAll().forEach(subjectDTO -> {
             if(subjectDTO.getForum().getId().equals(id)){
+                subjectDTOList.add(subjectDTO);
+            }
+        });
+        return subjectDTOList;
+    }
+
+    @Override
+    public List<SubjectDTO> findByForumId(String slug) {
+        List<SubjectDTO> subjectDTOList = new  ArrayList<>();
+        findAll().forEach(subjectDTO -> {
+            if(subjectDTO.getForum().getSlug().equals(slug)){
                 subjectDTOList.add(subjectDTO);
             }
         });

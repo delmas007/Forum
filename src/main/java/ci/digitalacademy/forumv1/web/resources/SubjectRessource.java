@@ -31,6 +31,14 @@ public class SubjectRessource {
         return new  ResponseEntity<>(subjectService.create(subjectDTO,id), HttpStatus.CREATED);
     }
 
+    @PostMapping("/slug/{slug}")
+    @ApiResponse(responseCode = "201", description= "Request to save subject")
+    @Operation(summary = "subject new save", description = "this endpoint allow to save subject")
+    public ResponseEntity<SubjectDTO> saveSubjectBySlug(@RequestBody SubjectDTO subjectDTO,@PathVariable String slug){
+        log.debug("REST Request to save Subject : {}", subjectDTO);
+        return new  ResponseEntity<>(subjectService.create(subjectDTO,slug), HttpStatus.CREATED);
+    }
+
 //    @PostMapping("/{id}")
 //    public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO){
 //        log.debug("REST Request to update Subject by : {}", subjectDTO);
@@ -67,11 +75,34 @@ public class SubjectRessource {
         }
     }
 
+    @GetMapping("/slug/{slug}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Request to get subject"),
+            @ApiResponse(responseCode = "404", description = "subject not found", content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @Operation(summary = "get subject by slug", description = "this endpoint allow to get subject by slug")
+    public ResponseEntity<?> findBySlugSubject(@PathVariable String slug){
+        log.debug("REST Request to get Subject : {}", slug);
+        Optional<SubjectDTO> subjectDTO = subjectService.findBySlug(slug);
+        if(subjectDTO.isPresent()){
+            return new ResponseEntity<>(subjectDTO.get(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Subject not found",HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/forum/{id}")
     @Operation(summary = "find by id forum", description = "this endpoint allow to find by id forum")
     public List<SubjectDTO> findByForumId(@PathVariable Long id){
         log.debug("REST Request to get all Subjects by forum id : {}", id);
         return subjectService.findByForumId(id);
+    }
+
+    @GetMapping("/forum/slug/{slug}")
+    @Operation(summary = "find by slug forum", description = "this endpoint allow to find by slug forum")
+    public List<SubjectDTO> findByForumSlug(@PathVariable String slug){
+        log.debug("REST Request to get all Subjects by forum slug : {}", slug);
+        return subjectService.findByForumId(slug);
     }
 
 

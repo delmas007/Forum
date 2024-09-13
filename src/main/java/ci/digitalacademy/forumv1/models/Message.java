@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Message {
+public class Message implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

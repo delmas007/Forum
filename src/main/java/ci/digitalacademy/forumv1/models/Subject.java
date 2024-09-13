@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Subject {
+public class Subject implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

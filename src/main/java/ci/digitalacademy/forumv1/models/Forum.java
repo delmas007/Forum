@@ -15,11 +15,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Forum implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String slug;
-    private String name;
+
+    @Column(nullable = false)
+    private String name ;
+
+    @Column(nullable = false)
     private String description;
 
    @OneToMany(mappedBy = "forum")

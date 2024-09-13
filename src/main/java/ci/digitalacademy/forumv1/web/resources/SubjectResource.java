@@ -20,15 +20,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/api/subject")
-public class SubjectRessource {
+public class SubjectResource {
     private final SubjectService subjectService;
 
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "201", description= "Request to save subject")
     @Operation(summary = "subject new save", description = "this endpoint allow to save subject")
-    public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO,@PathVariable Long id){
+    public ResponseEntity<SubjectDTO> saveSubjectById(@RequestBody SubjectDTO subjectDTO,@PathVariable Long id){
         log.debug("REST Request to save Subject : {}", subjectDTO);
-        return new  ResponseEntity<>(subjectService.create(subjectDTO,id), HttpStatus.CREATED);
+        return new  ResponseEntity<>(subjectService.createByIdForum(subjectDTO,id), HttpStatus.CREATED);
     }
 
     @PostMapping("/slug/{slug}")
@@ -36,24 +36,12 @@ public class SubjectRessource {
     @Operation(summary = "subject new save", description = "this endpoint allow to save subject")
     public ResponseEntity<SubjectDTO> saveSubjectBySlug(@RequestBody SubjectDTO subjectDTO,@PathVariable String slug){
         log.debug("REST Request to save Subject : {}", subjectDTO);
-        return new  ResponseEntity<>(subjectService.create(subjectDTO,slug), HttpStatus.CREATED);
+        return new  ResponseEntity<>(subjectService.createBySlugForum(subjectDTO,slug), HttpStatus.CREATED);
     }
 
-//    @PostMapping("/{id}")
-//    public ResponseEntity<SubjectDTO> updateSubject(@RequestBody SubjectDTO subjectDTO){
-//        log.debug("REST Request to update Subject by : {}", subjectDTO);
-//        return new ResponseEntity<>(subjectService.update(subjectDTO), HttpStatus.OK);
-//    }
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "subject delete", description = "this endpoint allow to delete subject")
-    public void deleteSubject(@PathVariable Long id){
-        log.debug("REST Request to delete Subject {}", id);
-        subjectService.delete(id);
-    }
 
     @GetMapping
-    @Operation(summary = "get all subject", description = "this endpoint allow to get all subject")
+    @Operation(summary = "find all subject", description = "this endpoint allow to get all subject")
     public List<SubjectDTO> findAllSubject(){
         log.debug("REST Request to get all Subjects");
         return subjectService.findAll();
@@ -66,7 +54,7 @@ public class SubjectRessource {
     })
     @Operation(summary = "get subject by id", description = "this endpoint allow to get subject by id")
     public ResponseEntity<?> findByIdSubject(@PathVariable Long id){
-        log.debug("REST Request to get Subject : {}", id);
+        log.debug("REST Request to get by id Subject : {}", id);
         Optional<SubjectDTO> subjectDTO = subjectService.findById(id);
         if(subjectDTO.isPresent()){
             return new ResponseEntity<>(subjectDTO.get(), HttpStatus.OK);
@@ -82,7 +70,7 @@ public class SubjectRessource {
     })
     @Operation(summary = "get subject by slug", description = "this endpoint allow to get subject by slug")
     public ResponseEntity<?> findBySlugSubject(@PathVariable String slug){
-        log.debug("REST Request to get Subject : {}", slug);
+        log.debug("REST Request to get by slug Subject : {}", slug);
         Optional<SubjectDTO> subjectDTO = subjectService.findBySlug(slug);
         if(subjectDTO.isPresent()){
             return new ResponseEntity<>(subjectDTO.get(), HttpStatus.OK);
@@ -102,7 +90,7 @@ public class SubjectRessource {
     @Operation(summary = "find by slug forum", description = "this endpoint allow to find by slug forum")
     public List<SubjectDTO> findByForumSlug(@PathVariable String slug){
         log.debug("REST Request to get all Subjects by forum slug : {}", slug);
-        return subjectService.findByForumId(slug);
+        return subjectService.findByForumSlug(slug);
     }
 
 

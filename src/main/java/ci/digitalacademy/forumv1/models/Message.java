@@ -19,8 +19,13 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String slug;
+
+    @Column(nullable = false)
     private String content;
+
     private LocalDate date;
 
     @ManyToOne

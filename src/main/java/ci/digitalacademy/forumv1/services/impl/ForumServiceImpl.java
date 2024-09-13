@@ -7,14 +7,16 @@ import ci.digitalacademy.forumv1.services.dto.ForumDTO;
 import ci.digitalacademy.forumv1.services.mapper.ForumMapper;
 import ci.digitalacademy.forumv1.utils.SlugifyUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ForumServiceImpl implements ForumService {
 
     private final ForumRepository forumRepository;
@@ -22,19 +24,17 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public ForumDTO save(ForumDTO forumDTO) {
+        log.debug("Request to save Forum : {}", forumDTO);
         Forum forum = forumMapper.toEntity(forumDTO);
         forum.setSlug(SlugifyUtils.generate(forum.getName()));
         Forum saveForum = forumRepository.save(forum);
         return forumMapper.fromEntity(saveForum);
     }
 
-    @Override
-    public ForumDTO update(ForumDTO forumDTO) {
-        return null;
-    }
 
     @Override
-    public Optional<ForumDTO> finOne(Long id) {
+    public Optional<ForumDTO> finOneById(Long id) {
+        log.debug("Request to get Forum by id : {}", id);
        return forumRepository.findById(id).map(forum -> {
             return forumMapper.fromEntity(forum);
         });
@@ -42,7 +42,8 @@ public class ForumServiceImpl implements ForumService {
     }
 
     @Override
-    public Optional<ForumDTO> finOne(String slug) {
+    public Optional<ForumDTO> finOneBySlug(String slug) {
+        log.debug("Request to get Forum by slug : {}", slug);
         return forumRepository.findBySlug(slug).map(forum -> {
             return forumMapper.fromEntity(forum);
         });
@@ -50,13 +51,10 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public List<ForumDTO> finAll() {
+        log.debug("Request to get all Forum");
         return forumRepository.findAll().stream().map(forum -> {
             return forumMapper.fromEntity(forum);
         }).toList();
     }
 
-    @Override
-    public void delete(ForumDTO forumDTO) {
-
-    }
 }

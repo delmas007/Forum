@@ -3,7 +3,6 @@ package ci.digitalacademy.forumv1.services.impl;
 import ci.digitalacademy.forumv1.models.Message;
 import ci.digitalacademy.forumv1.repositories.MessageRepository;
 import ci.digitalacademy.forumv1.services.MessageService;
-import ci.digitalacademy.forumv1.services.SubjectService;
 import ci.digitalacademy.forumv1.services.dto.MessageDTO;
 import ci.digitalacademy.forumv1.services.mapper.MessageMapper;
 import ci.digitalacademy.forumv1.utils.SlugifyUtils;
@@ -34,14 +33,15 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageDTO> findAll() {
-        log.debug("Request to found all");
+        log.debug("Request to found all message");
         return messageRepository.findAll().stream().map(message -> {
             return messageMapper.fromEntity(message);
         }).toList();
     }
 
     @Override
-    public List<MessageDTO> getAllMessageSubject(Long id) {
+    public List<MessageDTO> getAllMessageByIdSubject(Long id) {
+        log.debug("Request to get all message by subject id : {}", id);
         List<MessageDTO> listMessage = new ArrayList<>();
         List<MessageDTO> messages = findAll();
         for (MessageDTO message : messages){
@@ -54,7 +54,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<MessageDTO> getAllMessageSubject(String slug) {
+    public List<MessageDTO> getAllMessageBySlugSubject(String slug) {
+        log.debug("Request to get all message by subject slug : {}", slug);
         List<MessageDTO> listMessage = new ArrayList<>();
         List<MessageDTO> messages = findAll();
         for (MessageDTO message : messages){

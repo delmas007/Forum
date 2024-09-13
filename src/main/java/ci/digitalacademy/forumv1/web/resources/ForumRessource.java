@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +38,8 @@ public class ForumRessource {
     })
     @Operation(summary = "get one by id", description = "this endpoint allow to get one id")
     public ResponseEntity<?> getOneById(@PathVariable Long id){
-        log.debug("REST Request to get forum : {}", id);
-        Optional<ForumDTO> forumDTO = forumService.finOne(id);
+        log.debug("REST Request to get by id forum : {}", id);
+        Optional<ForumDTO> forumDTO = forumService.finOneById(id);
         if (forumDTO.isPresent()){
             return new ResponseEntity<>(forumDTO.get(),HttpStatus.OK);
         }else {
@@ -55,8 +54,8 @@ public class ForumRessource {
     })
     @Operation(summary = "get one by slug", description = "this endpoint allow to get one slug")
     public ResponseEntity<?> getOneBySlug(@PathVariable String slug){
-        log.debug("REST Request to get forum : {}", slug);
-        Optional<ForumDTO> forumDTO = forumService.finOne(slug);
+        log.debug("REST Request to get by slug forum : {}", slug);
+        Optional<ForumDTO> forumDTO = forumService.finOneBySlug(slug);
         if (forumDTO.isPresent()){
             return new ResponseEntity<>(forumDTO.get(),HttpStatus.OK);
         }else {

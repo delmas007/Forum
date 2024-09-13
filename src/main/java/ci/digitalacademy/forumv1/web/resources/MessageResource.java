@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,7 @@ public class MessageResource {
     @PostMapping("/{id}")
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
-    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
+    public ResponseEntity<MessageDTO> saveMessageById(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
         log.debug("REST Request to save  {}", messageDTO);
         Optional<SubjectDTO> byId = subjectService.findById(id);
         messageDTO.setSubject(byId.get());
@@ -43,7 +42,7 @@ public class MessageResource {
     @PostMapping("/slug/{slug}")
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
-    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable String slug){
+    public ResponseEntity<MessageDTO> saveMessageBySlug(@RequestBody MessageDTO messageDTO, @PathVariable String slug){
         log.debug("REST Request to save  {}", messageDTO);
         Optional<SubjectDTO> byId = subjectService.findBySlug(slug);
         messageDTO.setSubject(byId.get());
@@ -53,7 +52,7 @@ public class MessageResource {
 
     @GetMapping
     @Operation(summary = "get all message", description = "this endpoint allow to get all message")
-    public List<MessageDTO> getAllMessage(){
+    public List<MessageDTO> getAllMessages(){
         log.debug("REST Request to get all");
         return messageService.findAll();
     }
@@ -63,10 +62,10 @@ public class MessageResource {
             @ApiResponse(responseCode = "201", description = "Request to get message"),
             @ApiResponse(responseCode = "404", description = "message not found", content = @Content(schema = @Schema(implementation = String.class)))
     })
-    @Operation(summary = "get all message subject", description = "this endpoint allow to get all message subject")
-    public List<MessageDTO> getAllMessageSubject(@PathVariable Long id){
+    @Operation(summary = "get all message by id subject", description = "this endpoint allow to get all message by id subject")
+    public List<MessageDTO> getAllMessageByIdSubject(@PathVariable Long id){
         log.debug("REST Request to get all message subject");
-        return messageService.getAllMessageSubject(id);
+        return messageService.getAllMessageByIdSubject(id);
     }
 
     @GetMapping("/slug/{slug}")
@@ -74,9 +73,9 @@ public class MessageResource {
             @ApiResponse(responseCode = "201", description = "Request to get message by slug"),
             @ApiResponse(responseCode = "404", description = "message not found", content = @Content(schema = @Schema(implementation = String.class)))
     })
-    @Operation(summary = "get all message subject", description = "this endpoint allow to get all message subject")
+    @Operation(summary = "get all message by slug subject", description = "this endpoint allow to get all message by slug subject")
     public List<MessageDTO> getAllMessageSubjectBySlug(@PathVariable String slug){
         log.debug("REST Request to get all message subject by slug");
-        return messageService.getAllMessageSubject(slug);
+        return messageService.getAllMessageBySlugSubject(slug);
     }
 }

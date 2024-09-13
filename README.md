@@ -20,5 +20,6 @@ Si vous avez besoin de tester les endpoints, vous pouvez utiliser Postman ou tou
     - `POST /api/subject/{id}` : Créer un sujet dans un forum
     - `GET /api/subject/{id}` : Récupérer la liste des sujets d'un forum
     - `GET /api/subject/{id}` : Récupérer un sujet
-    - `POST /api/message/{id}` : Créer un message dans un sujet
-    - `GET /api/message/{id}` : Récupérer la liste des messages d'un sujet
+    - `POST /api/messages/{id}` : Créer un message dans un sujet
+    - `GET /api/messages/{id}` : Récupérer la liste des messages d'un sujet
+    - `GET /api/messages/{id}` : Récupérer la liste des messages d'un sujet

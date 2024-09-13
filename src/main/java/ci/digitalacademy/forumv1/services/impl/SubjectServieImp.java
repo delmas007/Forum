@@ -29,6 +29,9 @@ public class SubjectServieImp implements SubjectService {
         log.debug("Request to create by id forum  : {}", subjectDTO);
         Optional<ForumDTO> forumDTO = forumService.finOneById(id);
         subjectDTO.setSlug(SlugifyUtils.generate(subjectDTO.getTitle()));
+        if (forumDTO.isEmpty()){
+            return null;
+        }
         subjectDTO.setForum(forumDTO.get());
         return subjectMapper.fromEntity(subjectRepository.save(subjectMapper.toEntity(subjectDTO)));
     }

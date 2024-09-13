@@ -43,7 +43,7 @@ public class ForumRessource {
         if (forumDTO.isPresent()){
             return new ResponseEntity<>(forumDTO.get(),HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(forumDTO.get(),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("forum not found",HttpStatus.NOT_FOUND);
         }
     }
 
@@ -59,7 +59,7 @@ public class ForumRessource {
         if (forumDTO.isPresent()){
             return new ResponseEntity<>(forumDTO.get(),HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(forumDTO.get(),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("forum not found",HttpStatus.NOT_FOUND);
         }
     }
 

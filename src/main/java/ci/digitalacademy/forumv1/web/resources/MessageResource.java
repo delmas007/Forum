@@ -34,6 +34,9 @@ public class MessageResource {
     public ResponseEntity<MessageDTO> saveMessageById(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
         log.debug("REST Request to save  {}", messageDTO);
         Optional<SubjectDTO> byId = subjectService.findById(id);
+        if (byId.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         messageDTO.setSubject(byId.get());
         messageDTO.setDate(LocalDate.now());
         return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
@@ -45,6 +48,9 @@ public class MessageResource {
     public ResponseEntity<MessageDTO> saveMessageBySlug(@RequestBody MessageDTO messageDTO, @PathVariable String slug){
         log.debug("REST Request to save  {}", messageDTO);
         Optional<SubjectDTO> byId = subjectService.findBySlug(slug);
+        if (byId.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         messageDTO.setSubject(byId.get());
         messageDTO.setDate(LocalDate.now());
         return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);

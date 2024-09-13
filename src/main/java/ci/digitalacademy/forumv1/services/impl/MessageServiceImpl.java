@@ -20,6 +20,7 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
     private final MessageMapper messageMapper;
+
     @Override
     public MessageDTO saveMessage(MessageDTO messageDTO) {
         log.debug("Request to save: {}", messageDTO);

@@ -2,6 +2,11 @@ package ci.digitalacademy.forumv1.web.resources;
 
 import ci.digitalacademy.forumv1.services.SubjectService;
 import ci.digitalacademy.forumv1.services.dto.SubjectDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +24,8 @@ public class SubjectRessource {
     private final SubjectService subjectService;
 
     @PostMapping("/{id}")
+    @ApiResponse(responseCode = "201", description= "Request to save subject")
+    @Operation(summary = "subject new save", description = "this endpoint allow to save subject")
     public ResponseEntity<SubjectDTO> saveSubject(@RequestBody SubjectDTO subjectDTO,@PathVariable Long id){
         log.debug("REST Request to save Subject : {}", subjectDTO);
         return new  ResponseEntity<>(subjectService.create(subjectDTO,id), HttpStatus.CREATED);
@@ -31,18 +38,25 @@ public class SubjectRessource {
 //    }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "subject delete", description = "this endpoint allow to delete subject")
     public void deleteSubject(@PathVariable Long id){
         log.debug("REST Request to delete Subject {}", id);
         subjectService.delete(id);
     }
 
     @GetMapping
+    @Operation(summary = "get all subject", description = "this endpoint allow to get all subject")
     public List<SubjectDTO> findAllSubject(){
         log.debug("REST Request to get all Subjects");
         return subjectService.findAll();
     }
 
     @GetMapping("/{id}")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Request to get subject"),
+            @ApiResponse(responseCode = "404", description = "subject not found", content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @Operation(summary = "get subject by id", description = "this endpoint allow to get subject by id")
     public ResponseEntity<?> findByIdSubject(@PathVariable Long id){
         log.debug("REST Request to get Subject : {}", id);
         Optional<SubjectDTO> subjectDTO = subjectService.findById(id);
@@ -54,6 +68,7 @@ public class SubjectRessource {
     }
 
     @GetMapping("/forum/{id}")
+    @Operation(summary = "find by id forum", description = "this endpoint allow to find by id forum")
     public List<SubjectDTO> findByForumId(@PathVariable Long id){
         log.debug("REST Request to get all Subjects by forum id : {}", id);
         return subjectService.findByForumId(id);

@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,23 +29,25 @@ public class MessageResource {
     private final MessageService messageService;
     private final SubjectService subjectService;
 
-    @PostMapping("/slug/{slug}")
+    @PostMapping("/{id}")
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
-    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable Long slug){
+    public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
         log.debug("REST Request to save  {}", messageDTO);
-        Optional<SubjectDTO> byId = subjectService.findById(slug);
+        Optional<SubjectDTO> byId = subjectService.findById(id);
         messageDTO.setSubject(byId.get());
+        messageDTO.setDate(LocalDate.now());
         return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{slug}")
+    @PostMapping("/slug/{slug}")
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
     public ResponseEntity<MessageDTO> saveMessage(@RequestBody MessageDTO messageDTO, @PathVariable String slug){
         log.debug("REST Request to save  {}", messageDTO);
         Optional<SubjectDTO> byId = subjectService.findBySlug(slug);
         messageDTO.setSubject(byId.get());
+        messageDTO.setDate(LocalDate.now());
         return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
     }
 

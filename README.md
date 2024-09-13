@@ -2,6 +2,17 @@
 
 ## Installation
 
+**Prerequis**
+- Java 17
+- Maven
+- Git
+- Postman
+- IDE (IntelliJ IDEA, Eclipse, NetBeans, etc.)
+- Base de données PostgreSQL
+
+
+Pour installer le projet, suivez les étapes suivantes :
+
 1. **Clonez le dépôt :**
    ```bash
    git clone https://github.com/delmas007/Forum.git

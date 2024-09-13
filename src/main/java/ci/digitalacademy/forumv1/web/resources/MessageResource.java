@@ -32,28 +32,16 @@ public class MessageResource {
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
     public ResponseEntity<MessageDTO> saveMessageById(@RequestBody MessageDTO messageDTO, @PathVariable Long id){
-        log.debug("REST Request to save  {}", messageDTO);
-        Optional<SubjectDTO> byId = subjectService.findById(id);
-        if (byId.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        messageDTO.setSubject(byId.get());
-        messageDTO.setDate(LocalDate.now());
-        return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
+        log.debug("REST Request to save by id {}", messageDTO);
+        return new ResponseEntity<>(messageService.saveMessageById(messageDTO, id), HttpStatus.CREATED);
     }
 
     @PostMapping("/slug/{slug}")
     @ApiResponse(responseCode = "201", description= "Request to save message")
     @Operation(summary = "message new save", description = "this endpoint allow to save message")
     public ResponseEntity<MessageDTO> saveMessageBySlug(@RequestBody MessageDTO messageDTO, @PathVariable String slug){
-        log.debug("REST Request to save  {}", messageDTO);
-        Optional<SubjectDTO> byId = subjectService.findBySlug(slug);
-        if (byId.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        messageDTO.setSubject(byId.get());
-        messageDTO.setDate(LocalDate.now());
-        return new ResponseEntity<>(messageService.saveMessage(messageDTO), HttpStatus.CREATED);
+        log.debug("REST Request to save by slug {}", messageDTO);
+        return new ResponseEntity<>(messageService.saveMessageBySlug(messageDTO, slug), HttpStatus.CREATED);
     }
 
     @GetMapping

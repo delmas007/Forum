@@ -41,6 +41,9 @@ public class SubjectServieImp implements SubjectService {
         log.debug("Request to create by slug : {}", subjectDTO);
         Optional<ForumDTO> forumDTO = forumService.finOneBySlug(slug);
         subjectDTO.setSlug(SlugifyUtils.generate(subjectDTO.getTitle()));
+        if (forumDTO.isEmpty()){
+            return null;
+        }
         subjectDTO.setForum(forumDTO.get());
         return subjectMapper.fromEntity(subjectRepository.save(subjectMapper.toEntity(subjectDTO)));
     }
